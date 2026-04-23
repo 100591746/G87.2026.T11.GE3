@@ -245,26 +245,28 @@ class EnterpriseManager:
 
         return documents_count
 
-class DocumentsJsonStore:
-    """Manages the documents JSON store"""
+class JsonStore:
+    """Generic JSON store"""
 
-    def __init__(self):
-        self._file_path = TEST_DOCUMENTS_STORE_FILE
-
-    def load(self):
-        """Loads documents from store"""
-        return EnterpriseManager.load_json_store(self._file_path)
-
-class NumDocsJsonStore:
-    """Manages the numdocs JSON store"""
-
-    def __init__(self):
-        self._file_path = TEST_NUMDOCS_STORE_FILE
+    def __init__(self, file_path):
+        self._file_path = file_path
 
     def load(self):
-        """Loads numdocs entries from store"""
+        """Loads entries from store"""
         return EnterpriseManager.load_json_store(self._file_path)
 
     def save(self, data_list):
-        """Saves numdocs entries to store"""
+        """Saves entries to store"""
         EnterpriseManager.save_json_store(self._file_path, data_list)
+
+class DocumentsJsonStore(JsonStore):
+    """Manages the documents JSON store"""
+
+    def __init__(self):
+        super().__init__(TEST_DOCUMENTS_STORE_FILE)
+
+class NumDocsJsonStore(JsonStore):
+    """Manages the numdocs JSON store"""
+
+    def __init__(self):
+        super().__init__(TEST_NUMDOCS_STORE_FILE)
