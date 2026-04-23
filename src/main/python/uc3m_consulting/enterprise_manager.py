@@ -211,9 +211,7 @@ class EnterpriseManager:
         report_entry = NumDocsReport(date_str, documents_count).to_json()
 
         numdocs_store = NumDocsJsonStore()
-        numdocs_list = numdocs_store.load()
-        numdocs_list.append(report_entry)
-        numdocs_store.save(numdocs_list)
+        numdocs_store.add_item(report_entry)
 
         return documents_count
 

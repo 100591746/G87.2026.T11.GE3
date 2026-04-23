@@ -47,3 +47,10 @@ class NumDocsJsonStore(JsonStore):
 
     def __init__(self):
         super().__init__(TEST_NUMDOCS_STORE_FILE)
+
+    def add_item(self, item):
+        """Adds a new item to the numdocs store"""
+        data_list = self.load()
+        data_list.append(item)
+        self.save(data_list)
+        
