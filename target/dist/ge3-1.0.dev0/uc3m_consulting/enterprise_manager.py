@@ -17,6 +17,26 @@ class EnterpriseManager:
         pass
 
     @staticmethod
+    def load_json_store(file_path):
+        """Loads a JSON store file and returns its contents as a list"""
+        try:
+            with open(file_path, "r", encoding="utf-8", newline="") as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return []
+        except json.JSONDecodeError as ex:
+            raise EnterpriseManagementException("JSON Decode Error - Wrong JSON Format") from ex
+
+    @staticmethod
+    def save_json_store(file_path, data_list):
+        """Saves a list to a JSON store file"""
+        try:
+            with open(file_path, "w", encoding="utf-8", newline="") as file:
+                json.dump(data_list, file, indent=2)
+        except FileNotFoundError as ex:
+            raise EnterpriseManagementException("Wrong file  or file path") from ex
+
+    @staticmethod
     def validate_cif(cif_code: str):
         """validates a cif number """
         if not isinstance(cif_code, str):
@@ -127,13 +147,7 @@ class EnterpriseManager:
                                         starting_date=date,
                                         project_budget=budget)
 
-        try:
-            with open(PROJECTS_STORE_FILE, "r", encoding="utf-8", newline="") as file:
-                projects_list = json.load(file)
-        except FileNotFoundError:
-            projects_list = []
-        except json.JSONDecodeError as ex:
-            raise EnterpriseManagementException("JSON Decode Error - Wrong JSON Format") from ex
+        projects_list = self.load_json_store(PROJECTS_STORE_FILE)
 
         for project_item in projects_list:
             if project_item == new_project.to_json():
@@ -141,13 +155,7 @@ class EnterpriseManager:
 
         projects_list.append(new_project.to_json())
 
-        try:
-            with open(PROJECTS_STORE_FILE, "w", encoding="utf-8", newline="") as file:
-                json.dump(projects_list, file, indent=2)
-        except FileNotFoundError as ex:
-            raise EnterpriseManagementException("Wrong file  or file path") from ex
-        except json.JSONDecodeError as ex:
-            raise EnterpriseManagementException("JSON Decode Error - Wrong JSON Format") from ex
+        self.save_json_store(PROJECTS_STORE_FILE, projects_list)
         return new_project.project_id
 
 
@@ -180,11 +188,7 @@ class EnterpriseManager:
 
 
         # open documents
-        try:
-            with open(TEST_DOCUMENTS_STORE_FILE, "r", encoding="utf-8", newline="") as file:
-                documents_list = json.load(file)
-        except FileNotFoundError as ex:
-            raise EnterpriseManagementException("Wrong file  or file path") from ex
+        documents_list = self.load_json_store(TEST_DOCUMENTS_STORE_FILE)
 
         documents_count = 0
 
@@ -216,18 +220,8 @@ class EnterpriseManager:
              "Numfiles": documents_count
              }
 
-        try:
-            with open(TEST_NUMDOCS_STORE_FILE, "r", encoding="utf-8", newline="") as file:
-                numdocs_list = json.load(file)
-        except FileNotFoundError:
-            numdocs_list = []
-        except json.JSONDecodeError as ex:
-            raise EnterpriseManagementException("JSON Decode Error - Wrong JSON Format") from ex
+        numdocs_list = self.load_json_store(TEST_NUMDOCS_STORE_FILE)
         numdocs_list.append(report_entry)
-        try:
-            with open(TEST_NUMDOCS_STORE_FILE, "w", encoding="utf-8", newline="") as file:
-                json.dump(numdocs_list, file, indent=2)
-        except FileNotFoundError as ex:
-            raise EnterpriseManagementException("Wrong file  or file path") from ex
+        self.save_json_store(TEST_NUMDOCS_STORE_FILE, numdocs_list)
 
         return documents_count
