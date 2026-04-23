@@ -15,6 +15,7 @@ from uc3m_consulting.numdocs_report import NumDocsReport
 from uc3m_consulting.starting_date import StartingDate
 from uc3m_consulting.department import Department
 from uc3m_consulting.project_acronym import ProjectAcronym
+from uc3m_consulting.project_description import ProjectDescription
 
 class EnterpriseManager:
     """Class for providing the methods for managing the orders"""
@@ -121,7 +122,7 @@ class EnterpriseManager:
         """registers a new project"""
         self.validate_cif(company_cif)
         ProjectAcronym(project_acronym)
-        self.validate_description(project_description)
+        ProjectDescription(project_description)
 
         Department(department)
 
