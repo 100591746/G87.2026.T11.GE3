@@ -43,19 +43,19 @@ class EnterpriseManager:
                 even_sum = even_sum + int(cif_digits[i])
 
         total_sum = odd_sum + even_sum
-        u2 = total_sum % 10
-        r = 10 - u2
+        units_digits = total_sum % 10
+        control_number = 10 - units_digits
 
-        if r == 10:
-            r = 0
+        if control_number == 10:
+            control_number = 0
 
         dic = "JABCDEFGHI"
 
         if cif_letter in ('A', 'B', 'E', 'H'):
-            if str(r) != control_char:
+            if str(control_number) != control_char:
                 raise EnterpriseManagementException("Invalid CIF character control number")
         elif cif_letter in ('P', 'Q', 'S', 'K'):
-            if dic[r] != control_char:
+            if dic[control_number] != control_char:
                 raise EnterpriseManagementException("Invalid CIF character control letter")
         else:
             raise EnterpriseManagementException("CIF type not supported")
