@@ -80,8 +80,17 @@ class DocumentsJsonStore(JsonStore):
 class NumDocsJsonStore(JsonStore):
     """Manages the numdocs JSON store"""
 
+    __instance = None
+
+    def __new__(cls):
+        if cls.__instance is None:
+            cls.__instance = super(NumDocsJsonStore, cls).__new__(cls)
+        return cls.__instance
+
     def __init__(self):
-        super().__init__(TEST_NUMDOCS_STORE_FILE)
+        if not hasattr(self, "_initialized"):
+            super().__init__(TEST_NUMDOCS_STORE_FILE)
+            self._initialized = True
 
     def add_item(self, item):
         """Adds a new item to the numdocs store"""
