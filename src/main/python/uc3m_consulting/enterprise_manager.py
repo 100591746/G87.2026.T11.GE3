@@ -120,16 +120,8 @@ class EnterpriseManager:
         return True
 
     def validate_starting_date(self, date_str):
-        """validates the  date format  using regex"""
-        acronym_pattern = re.compile(r"^(([0-2]\d|3[0-1])\/(0\d|1[0-2])\/\d\d\d\d)$")
-        match_result = acronym_pattern.fullmatch(date_str)
-        if not match_result:
-            raise EnterpriseManagementException("Invalid date format")
-
-        try:
-            my_date = datetime.strptime(date_str, "%d/%m/%Y").date()
-        except ValueError as ex:
-            raise EnterpriseManagementException("Invalid date format") from ex
+        """validates the date format using regex"""
+        my_date = self.parse_date(date_str)
 
         if my_date < datetime.now(timezone.utc).date():
             raise EnterpriseManagementException("Project's date must be today or later.")
@@ -137,6 +129,7 @@ class EnterpriseManager:
         if my_date.year < 2025 or my_date.year > 2050:
             raise EnterpriseManagementException("Invalid date format")
         return date_str
+
     #pylint: disable=too-many-arguments, too-many-positional-arguments
     def register_project(self,
                          company_cif: str,
@@ -193,16 +186,7 @@ class EnterpriseManager:
             EnterpriseManagementException: On invalid date, file IO errors,
                 missing data, or cryptographic integrity failure.
         """
-        acronym_pattern = re.compile(r"^(([0-2]\d|3[0-1])\/(0\d|1[0-2])\/\d\d\d\d)$")
-        match_result = acronym_pattern.fullmatch(date_str)
-        if not match_result:
-            raise EnterpriseManagementException("Invalid date format")
-
-        try:
-            my_date = datetime.strptime(date_str, "%d/%m/%Y").date()
-        except ValueError as ex:
-            raise EnterpriseManagementException("Invalid date format") from ex
-
+        self.parse_date(date_str)
 
         # open documents
         documents_store = DocumentsJsonStore()
@@ -244,6 +228,19 @@ class EnterpriseManager:
         numdocs_store.save(numdocs_list)
 
         return documents_count
+
+    @staticmethod
+    def parse_date(date_str):
+        """Parses and validates a date string in dd/mm/yyyy format"""
+        date_pattern = re.compile(r"^(([0-2]\d|3[0-1])\/(0\d|1[0-2])\/\d\d\d\d)$")
+        match_result = date_pattern.fullmatch(date_str)
+        if not match_result:
+            raise EnterpriseManagementException("Invalid date format")
+
+        try:
+            return datetime.strptime(date_str, "%d/%m/%Y").date()
+        except ValueError as ex:
+            raise EnterpriseManagementException("Invalid date format") from ex
 
 class JsonStore:
     """Generic JSON store"""
