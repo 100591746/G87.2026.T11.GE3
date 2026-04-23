@@ -40,13 +40,6 @@ class EnterpriseManager:
             raise EnterpriseManagementException("Invalid budget amount")
 
     @staticmethod
-    def validate_description(project_description):
-        """validates the project description"""
-        description_pattern = re.compile(r"^.{10,30}$")
-        if not description_pattern.fullmatch(project_description):
-            raise EnterpriseManagementException("Invalid description format")
-
-    @staticmethod
     def load_json_store(file_path):
         """Loads a JSON store file and returns its contents as a list"""
         try:
