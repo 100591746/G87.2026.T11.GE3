@@ -147,11 +147,8 @@ class EnterpriseManager:
 
         if documents_count == 0:
             raise EnterpriseManagementException("No documents found")
-        # prepare json text
-        report_entry = NumDocsReport(date_str, documents_count).to_json()
 
-        numdocs_store = NumDocsJsonStore()
-        numdocs_store.add_item(report_entry)
+        self.save_numdocs_report(date_str, documents_count)
 
         return documents_count
 
@@ -167,3 +164,10 @@ class EnterpriseManager:
             return datetime.strptime(date_str, "%d/%m/%Y").date()
         except ValueError as ex:
             raise EnterpriseManagementException("Invalid date format") from ex
+
+    @staticmethod
+    def save_numdocs_report(date_str, documents_count):
+        """Creates and stores the numdocs report entry"""
+        report_entry = NumDocsReport(date_str, documents_count).to_json()
+        numdocs_store = NumDocsJsonStore()
+        numdocs_store.add_item(report_entry)
