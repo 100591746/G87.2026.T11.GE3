@@ -99,8 +99,8 @@ class EnterpriseManager:
             raise EnterpriseManagementException("Invalid description format")
 
         acronym_pattern = re.compile(r"(HR|FINANCE|LEGAL|LOGISTICS)")
-        res = acronym_pattern.fullmatch(department)
-        if not res:
+        match_result = acronym_pattern.fullmatch(department)
+        if not match_result:
             raise EnterpriseManagementException("Invalid department")
 
         self.validate_starting_date(date)
