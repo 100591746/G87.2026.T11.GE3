@@ -238,9 +238,10 @@ class EnterpriseManager:
              "Numfiles": documents_count
              }
 
-        numdocs_list = self.load_json_store(TEST_NUMDOCS_STORE_FILE)
+        numdocs_store = NumDocsJsonStore()
+        numdocs_list = numdocs_store.load()
         numdocs_list.append(report_entry)
-        self.save_json_store(TEST_NUMDOCS_STORE_FILE, numdocs_list)
+        numdocs_store.save(numdocs_list)
 
         return documents_count
 
@@ -253,3 +254,17 @@ class DocumentsJsonStore:
     def load(self):
         """Loads documents from store"""
         return EnterpriseManager.load_json_store(self._file_path)
+
+class NumDocsJsonStore:
+    """Manages the numdocs JSON store"""
+
+    def __init__(self):
+        self._file_path = TEST_NUMDOCS_STORE_FILE
+
+    def load(self):
+        """Loads numdocs entries from store"""
+        return EnterpriseManager.load_json_store(self._file_path)
+
+    def save(self, data_list):
+        """Saves numdocs entries to store"""
+        EnterpriseManager.save_json_store(self._file_path, data_list)
