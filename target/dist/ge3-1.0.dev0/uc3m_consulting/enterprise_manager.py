@@ -49,13 +49,13 @@ class EnterpriseManager:
         if control_number == 10:
             control_number = 0
 
-        dic = "JABCDEFGHI"
+        control_letters = "JABCDEFGHI"
 
         if cif_letter in ('A', 'B', 'E', 'H'):
             if str(control_number) != control_char:
                 raise EnterpriseManagementException("Invalid CIF character control number")
         elif cif_letter in ('P', 'Q', 'S', 'K'):
-            if dic[control_number] != control_char:
+            if control_letters[control_number] != control_char:
                 raise EnterpriseManagementException("Invalid CIF character control letter")
         else:
             raise EnterpriseManagementException("CIF type not supported")
