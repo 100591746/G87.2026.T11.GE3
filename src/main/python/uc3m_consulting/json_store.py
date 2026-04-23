@@ -40,8 +40,17 @@ class JsonStore:
 class DocumentsJsonStore(JsonStore):
     """Manages the documents JSON store"""
 
+    __instance = None
+
+    def __new__(cls):
+        if cls.__instance is None:
+            cls.__instance = super(DocumentsJsonStore, cls).__new__(cls)
+        return cls.__instance
+
     def __init__(self):
-        super().__init__(TEST_DOCUMENTS_STORE_FILE)
+        if not hasattr(self, "_initialized"):
+            super().__init__(TEST_DOCUMENTS_STORE_FILE)
+            self._initialized = True
 
     def find_by_date(self, date_str):
         """Returns the documents registered on the given date"""
