@@ -200,8 +200,8 @@ class EnterpriseManager:
             doc_date_str = datetime.fromtimestamp(time_val).strftime("%d/%m/%Y")
 
             if doc_date_str == date_str:
-                if self.is_valid_document(document):
-                    documents_count = documents_count + 1
+                ProjectDocument.build_from_store_data(document)
+                documents_count = documents_count + 1
 
         if documents_count == 0:
             raise EnterpriseManagementException("No documents found")

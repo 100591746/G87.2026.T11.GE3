@@ -1,6 +1,8 @@
 """Contains the class OrderShipping"""
 from datetime import datetime, timezone
 import hashlib
+from freezegun import freeze_time
+from uc3m_consulting.enterprise_management_exception import EnterpriseManagementException
 
 class ProjectDocument():
     """Class representing the information required for shipping of an order"""
@@ -58,3 +60,16 @@ class ProjectDocument():
     def document_signature(self):
         """Returns the sha256 signature of the date"""
         return hashlib.sha256(self.__signature_string().encode()).hexdigest()
+
+    @classmethod
+    def build_from_store_data(cls, document):
+        """Builds a ProjectDocument from stored data after checking its signature"""
+        time_val = document["register_date"]
+        frozen_datetime = datetime.fromtimestamp(time_val, tz=timezone.utc)
+
+        with freeze_time(frozen_datetime):
+            project_doc = cls(document["project_id"], document["file_name"])
+            if project_doc.document_signature != document["document_signature"]:
+                raise EnterpriseManagementException("Inconsistent document signature")
+
+        return project_doc
