@@ -197,21 +197,11 @@ class EnterpriseManager:
         # loop to find
         for document in documents_list:
             time_val = document["register_date"]
-
-            # string conversion for easy match
             doc_date_str = datetime.fromtimestamp(time_val).strftime("%d/%m/%Y")
 
             if doc_date_str == date_str:
-                d_obj = datetime.fromtimestamp(time_val, tz=timezone.utc)
-                with freeze_time(d_obj):
-                    # check the project id (thanks to freezetime)
-                    # if project_id are different then the data has been
-                    #manipulated
-                    project_doc = ProjectDocument(document["project_id"], document["file_name"])
-                    if project_doc.document_signature == document["document_signature"]:
-                        documents_count = documents_count + 1
-                    else:
-                        raise EnterpriseManagementException("Inconsistent document signature")
+                if self.is_valid_document(document):
+                    documents_count = documents_count + 1
 
         if documents_count == 0:
             raise EnterpriseManagementException("No documents found")
@@ -241,6 +231,19 @@ class EnterpriseManager:
             return datetime.strptime(date_str, "%d/%m/%Y").date()
         except ValueError as ex:
             raise EnterpriseManagementException("Invalid date format") from ex
+
+    @staticmethod
+    def is_valid_document(document):
+        """Checks whether a stored document has a consistent signature"""
+        time_val = document["register_date"]
+        d_obj = datetime.fromtimestamp(time_val, tz=timezone.utc)
+
+        with freeze_time(d_obj):
+            project_doc = ProjectDocument(document["project_id"], document["file_name"])
+            if project_doc.document_signature == document["document_signature"]:
+                return True
+
+        raise EnterpriseManagementException("Inconsistent document signature")
 
 class JsonStore:
     """Generic JSON store"""
