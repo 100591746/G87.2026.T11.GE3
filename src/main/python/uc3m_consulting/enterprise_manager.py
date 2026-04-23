@@ -205,7 +205,8 @@ class EnterpriseManager:
 
 
         # open documents
-        documents_list = self.load_json_store(TEST_DOCUMENTS_STORE_FILE)
+        documents_store = DocumentsJsonStore()
+        documents_list = documents_store.load()
 
         documents_count = 0
 
@@ -242,3 +243,13 @@ class EnterpriseManager:
         self.save_json_store(TEST_NUMDOCS_STORE_FILE, numdocs_list)
 
         return documents_count
+
+class DocumentsJsonStore:
+    """Manages the documents JSON store"""
+
+    def __init__(self):
+        self._file_path = TEST_DOCUMENTS_STORE_FILE
+
+    def load(self):
+        """Loads documents from store"""
+        return EnterpriseManager.load_json_store(self._file_path)
