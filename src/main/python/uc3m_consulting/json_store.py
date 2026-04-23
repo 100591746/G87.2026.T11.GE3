@@ -1,12 +1,12 @@
 """JSON store classes"""
+from datetime import datetime
 import json
 
 from uc3m_consulting.enterprise_management_exception import EnterpriseManagementException
 from uc3m_consulting.enterprise_manager_config import (
     TEST_DOCUMENTS_STORE_FILE,
-    TEST_NUMDOCS_STORE_FILE
+    TEST_NUMDOCS_STORE_FILE,
 )
-from datetime import datetime
 from uc3m_consulting.project_document import ProjectDocument
 
 
