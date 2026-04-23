@@ -14,6 +14,7 @@ from uc3m_consulting.json_store import DocumentsJsonStore, NumDocsJsonStore
 from uc3m_consulting.numdocs_report import NumDocsReport
 from uc3m_consulting.starting_date import StartingDate
 from uc3m_consulting.department import Department
+from uc3m_consulting.project_acronym import ProjectAcronym
 
 class EnterpriseManager:
     """Class for providing the methods for managing the orders"""
@@ -126,7 +127,7 @@ class EnterpriseManager:
                          budget: str):
         """registers a new project"""
         self.validate_cif(company_cif)
-        self.validate_acronym(project_acronym)
+        ProjectAcronym(project_acronym)
         self.validate_description(project_description)
 
         Department(department)
