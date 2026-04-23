@@ -11,6 +11,7 @@ from uc3m_consulting.enterprise_manager_config import (PROJECTS_STORE_FILE,
                                                        TEST_NUMDOCS_STORE_FILE)
 from uc3m_consulting.project_document import ProjectDocument
 from uc3m_consulting.json_store import DocumentsJsonStore, NumDocsJsonStore
+from uc3m_consulting.numdocs_report import NumDocsReport
 
 class EnterpriseManager:
     """Class for providing the methods for managing the orders"""
@@ -207,11 +208,7 @@ class EnterpriseManager:
         if documents_count == 0:
             raise EnterpriseManagementException("No documents found")
         # prepare json text
-        current_timestamp = datetime.now(timezone.utc).timestamp()
-        report_entry = {"Querydate":  date_str,
-             "ReportDate": current_timestamp,
-             "Numfiles": documents_count
-             }
+        report_entry = NumDocsReport(date_str, documents_count).to_json()
 
         numdocs_store = NumDocsJsonStore()
         numdocs_list = numdocs_store.load()
