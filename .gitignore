@@ -1,24 +1,66 @@
-# IDE
+# =========================
+# IDEs / Editors
+# =========================
 .idea/
+.vscode/
+*.iml
 
+# =========================
 # Python
+# =========================
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 
 # Virtual environments
 venv/
 .env/
+.venv/
 
-# Build / dist
-target/
-dist/
+# =========================
+# Build / Distribution
+# =========================
 build/
+dist/
+target/
+*.egg-info/
+.eggs/
 
-# Coverage
+# PyBuilder specific
+.pybuilder/
+target/
+
+# =========================
+# Testing / Coverage
+# =========================
 .coverage
 *.coverage
+coverage.xml
 htmlcov/
+.pytest_cache/
 
-# OS files
+# Test reports
+reports/
+*.json
+
+# =========================
+# Logs & temp files
+# =========================
+*.log
+*.tmp
+*.swp
+*.swo
+
+# =========================
+# macOS
+# =========================
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# =========================
+# Environment / secrets
+# =========================
+.env
+.env.*
+*.env
