@@ -1,11 +1,11 @@
-"""Contains the class OrderShipping"""
+"""Contains the ProjectDocument class"""
 from datetime import datetime, timezone
 import hashlib
 from freezegun import freeze_time
 from uc3m_consulting.enterprise_management_exception import EnterpriseManagementException
 
 class ProjectDocument():
-    """Class representing the information required for shipping of an order"""
+    """Class representing a project document"""
 
     def __init__(self, project_id: str, file_name):
         self.__alg = "SHA-256"
@@ -16,7 +16,7 @@ class ProjectDocument():
         self.__register_date = datetime.timestamp(justnow)
 
     def to_json(self):
-        """returns the object data in json format"""
+        """Returns the object data in JSON format"""
         return {"alg": self.__alg,
                 "type": self.__type,
                 "project_id": self.__project_id,
@@ -32,7 +32,7 @@ class ProjectDocument():
 
     @property
     def project_id(self):
-        """Property that represents the product_id of the patient"""
+        """Returns the project identifier"""
         return self.__project_id
 
     @project_id.setter
@@ -41,7 +41,7 @@ class ProjectDocument():
 
     @property
     def file_name(self):
-        """Property that represents the order_id"""
+        """Returns the file name"""
         return self.__file_name
     @file_name.setter
     def file_name(self, value):
@@ -49,7 +49,7 @@ class ProjectDocument():
 
     @property
     def register_date(self):
-        """Property that represents the phone number of the client"""
+        """Returns the register date"""
         return self.__register_date
     @register_date.setter
     def register_date(self, value):

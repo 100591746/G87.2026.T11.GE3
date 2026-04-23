@@ -140,7 +140,6 @@ class EnterpriseManager:
         """
         self.parse_date(date_str)
 
-        # open documents
         documents_store = DocumentsJsonStore()
         documents_list = documents_store.find_by_date(date_str)
         documents_count = documents_store.count_valid_documents(documents_list)
