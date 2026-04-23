@@ -10,6 +10,7 @@ from uc3m_consulting.enterprise_manager_config import (PROJECTS_STORE_FILE,
                                                        TEST_DOCUMENTS_STORE_FILE,
                                                        TEST_NUMDOCS_STORE_FILE)
 from uc3m_consulting.project_document import ProjectDocument
+from uc3m_consulting.json_store import DocumentsJsonStore, NumDocsJsonStore
 
 class EnterpriseManager:
     """Class for providing the methods for managing the orders"""
@@ -231,42 +232,3 @@ class EnterpriseManager:
             return datetime.strptime(date_str, "%d/%m/%Y").date()
         except ValueError as ex:
             raise EnterpriseManagementException("Invalid date format") from ex
-
-    @staticmethod
-    def is_valid_document(document):
-        """Checks whether a stored document has a consistent signature"""
-        time_val = document["register_date"]
-        d_obj = datetime.fromtimestamp(time_val, tz=timezone.utc)
-
-        with freeze_time(d_obj):
-            project_doc = ProjectDocument(document["project_id"], document["file_name"])
-            if project_doc.document_signature == document["document_signature"]:
-                return True
-
-        raise EnterpriseManagementException("Inconsistent document signature")
-
-class JsonStore:
-    """Generic JSON store"""
-
-    def __init__(self, file_path):
-        self._file_path = file_path
-
-    def load(self):
-        """Loads entries from store"""
-        return EnterpriseManager.load_json_store(self._file_path)
-
-    def save(self, data_list):
-        """Saves entries to store"""
-        EnterpriseManager.save_json_store(self._file_path, data_list)
-
-class DocumentsJsonStore(JsonStore):
-    """Manages the documents JSON store"""
-
-    def __init__(self):
-        super().__init__(TEST_DOCUMENTS_STORE_FILE)
-
-class NumDocsJsonStore(JsonStore):
-    """Manages the numdocs JSON store"""
-
-    def __init__(self):
-        super().__init__(TEST_NUMDOCS_STORE_FILE)
