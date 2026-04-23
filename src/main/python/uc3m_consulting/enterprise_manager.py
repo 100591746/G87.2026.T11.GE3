@@ -38,13 +38,6 @@ class EnterpriseManager:
             raise EnterpriseManagementException("Invalid budget amount")
 
     @staticmethod
-    def validate_department(department):
-        """validates the department"""
-        department_pattern = re.compile(r"(HR|FINANCE|LEGAL|LOGISTICS)")
-        if not department_pattern.fullmatch(department):
-            raise EnterpriseManagementException("Invalid department")
-
-    @staticmethod
     def validate_description(project_description):
         """validates the project description"""
         description_pattern = re.compile(r"^.{10,30}$")
