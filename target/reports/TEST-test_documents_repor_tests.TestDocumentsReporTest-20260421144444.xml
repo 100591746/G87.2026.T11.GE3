@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_documents_repor_tests.TestDocumentsReporTest-20260421144444" tests="3" file="test_documents_repor_tests.py" time="0.066" timestamp="2026-04-21T14:44:45" failures="0" errors="0" skipped="0">
+	<testcase classname="test_documents_repor_tests.TestDocumentsReporTest" name="test_file_wrong_date" time="0.051" timestamp="2026-04-21T14:44:45"/>
+	<testcase classname="test_documents_repor_tests.TestDocumentsReporTest" name="test_report_not_found" time="0.008" timestamp="2026-04-21T14:44:45"/>
+	<testcase classname="test_documents_repor_tests.TestDocumentsReporTest" name="test_valid_date" time="0.006" timestamp="2026-04-21T14:44:45"/>
+</testsuite>

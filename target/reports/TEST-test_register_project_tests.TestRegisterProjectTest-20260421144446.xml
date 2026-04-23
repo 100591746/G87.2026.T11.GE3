@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_register_project_tests.TestRegisterProjectTest-20260421144446" tests="5" file="test_register_project_tests.py" time="0.393" timestamp="2026-04-21T14:44:47" failures="0" errors="0" skipped="0">
+	<testcase classname="test_register_project_tests.TestRegisterProjectTest" name="test_duplicated_project_test" time="0.031" timestamp="2026-04-21T14:44:47"/>
+	<testcase classname="test_register_project_tests.TestRegisterProjectTest" name="test_parametrized_cases_tests" time="0.340" timestamp="2026-04-21T14:44:47"/>
+	<testcase classname="test_register_project_tests.TestRegisterProjectTest" name="test_project_for_today" time="0.007" timestamp="2026-04-21T14:44:47"/>
+	<testcase classname="test_register_project_tests.TestRegisterProjectTest" name="test_project_for_tomorrow" time="0.008" timestamp="2026-04-21T14:44:47"/>
+	<testcase classname="test_register_project_tests.TestRegisterProjectTest" name="test_project_yesterday_test" time="0.007" timestamp="2026-04-21T14:44:47"/>
+</testsuite>
