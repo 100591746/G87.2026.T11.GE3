@@ -12,6 +12,7 @@ from uc3m_consulting.enterprise_manager_config import (PROJECTS_STORE_FILE,
 from uc3m_consulting.project_document import ProjectDocument
 from uc3m_consulting.json_store import DocumentsJsonStore, NumDocsJsonStore
 from uc3m_consulting.numdocs_report import NumDocsReport
+from uc3m_consulting.starting_date import StartingDate
 
 class EnterpriseManager:
     """Class for providing the methods for managing the orders"""
@@ -147,7 +148,7 @@ class EnterpriseManager:
 
         self.validate_department(department)
 
-        self.validate_starting_date(date)
+        StartingDate(date)
 
         self.validate_budget(budget)
 
