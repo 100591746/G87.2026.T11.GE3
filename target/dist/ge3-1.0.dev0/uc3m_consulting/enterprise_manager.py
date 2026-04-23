@@ -42,8 +42,8 @@ class EnterpriseManager:
             else:
                 even_sum = even_sum + int(cif_digits[i])
 
-        t = odd_sum + even_sum
-        u2 = t % 10
+        total_sum = odd_sum + even_sum
+        u2 = total_sum % 10
         r = 10 - u2
 
         if r == 10:
