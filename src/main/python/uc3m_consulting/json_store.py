@@ -7,6 +7,7 @@ from uc3m_consulting.enterprise_manager_config import (
     TEST_NUMDOCS_STORE_FILE
 )
 from datetime import datetime
+from uc3m_consulting.project_document import ProjectDocument
 
 
 class JsonStore:
@@ -54,6 +55,17 @@ class DocumentsJsonStore(JsonStore):
                 documents_found.append(document)
 
         return documents_found
+
+    @staticmethod
+    def count_valid_documents(documents_list):
+        """Validates the documents and returns how many are valid"""
+        documents_count = 0
+
+        for document in documents_list:
+            ProjectDocument.build_from_store_data(document)
+            documents_count = documents_count + 1
+
+        return documents_count
 
 
 class NumDocsJsonStore(JsonStore):
