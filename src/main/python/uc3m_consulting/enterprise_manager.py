@@ -110,9 +110,9 @@ class EnterpriseManager:
         except ValueError as exc:
             raise EnterpriseManagementException("Invalid budget amount") from exc
 
-        n_str = str(f_bdgt)
-        if '.' in n_str:
-            decimales = len(n_str.split('.')[1])
+        budget_str = str(f_bdgt)
+        if '.' in budget_str:
+            decimales = len(budget_str.split('.')[1])
             if decimales > 2:
                 raise EnterpriseManagementException("Invalid budget amount")
 
