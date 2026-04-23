@@ -17,6 +17,44 @@ class EnterpriseManager:
         pass
 
     @staticmethod
+    def validate_budget(budget):
+        """validates the project budget"""
+        try:
+            budget_float = float(budget)
+        except ValueError as exc:
+            raise EnterpriseManagementException("Invalid budget amount") from exc
+
+        budget_str = str(budget_float)
+        if '.' in budget_str:
+            decimals = len(budget_str.split('.')[1])
+            if decimals > 2:
+                raise EnterpriseManagementException("Invalid budget amount")
+
+        if budget_float < 50000 or budget_float > 1000000:
+            raise EnterpriseManagementException("Invalid budget amount")
+
+    @staticmethod
+    def validate_department(department):
+        """validates the department"""
+        department_pattern = re.compile(r"(HR|FINANCE|LEGAL|LOGISTICS)")
+        if not department_pattern.fullmatch(department):
+            raise EnterpriseManagementException("Invalid department")
+
+    @staticmethod
+    def validate_description(project_description):
+        """validates the project description"""
+        description_pattern = re.compile(r"^.{10,30}$")
+        if not description_pattern.fullmatch(project_description):
+            raise EnterpriseManagementException("Invalid description format")
+
+    @staticmethod
+    def validate_acronym(project_acronym):
+        """validates the project acronym"""
+        acronym_pattern = re.compile(r"^[a-zA-Z0-9]{5,10}")
+        if not acronym_pattern.fullmatch(project_acronym):
+            raise EnterpriseManagementException("Invalid acronym")
+
+    @staticmethod
     def load_json_store(file_path):
         """Loads a JSON store file and returns its contents as a list"""
         try:
@@ -109,35 +147,14 @@ class EnterpriseManager:
                          budget: str):
         """registers a new project"""
         self.validate_cif(company_cif)
-        acronym_pattern = re.compile(r"^[a-zA-Z0-9]{5,10}")
-        match_result = acronym_pattern.fullmatch(project_acronym)
-        if not match_result:
-            raise EnterpriseManagementException("Invalid acronym")
-        md = re.compile(r"^.{10,30}$")
-        match_result = md.fullmatch(project_description)
-        if not match_result:
-            raise EnterpriseManagementException("Invalid description format")
+        self.validate_acronym(project_acronym)
+        self.validate_description(project_description)
 
-        acronym_pattern = re.compile(r"(HR|FINANCE|LEGAL|LOGISTICS)")
-        match_result = acronym_pattern.fullmatch(department)
-        if not match_result:
-            raise EnterpriseManagementException("Invalid department")
+        self.validate_department(department)
 
         self.validate_starting_date(date)
 
-        try:
-            budget_float  = float(budget)
-        except ValueError as exc:
-            raise EnterpriseManagementException("Invalid budget amount") from exc
-
-        budget_str = str(budget_float)
-        if '.' in budget_str:
-            decimales = len(budget_str.split('.')[1])
-            if decimales > 2:
-                raise EnterpriseManagementException("Invalid budget amount")
-
-        if budget_float < 50000 or budget_float > 1000000:
-            raise EnterpriseManagementException("Invalid budget amount")
+        self.validate_budget(budget)
 
 
         new_project = EnterpriseProject(company_cif=company_cif,
