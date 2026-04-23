@@ -29,20 +29,20 @@ class EnterpriseManager:
         cif_digits = cif_code[1:8]
         control_char = cif_code[8]
 
-        s1 = 0
+        odd_sum = 0
         s2 = 0
 
         for i in range(len(cif_digits)):
             if i % 2 == 0:
                 x = int(cif_digits[i]) * 2
                 if x > 9:
-                    s1 = s1 + (x // 10) + (x % 10)
+                    odd_sum = odd_sum + (x // 10) + (x % 10)
                 else:
-                    s1 = s1 + x
+                    odd_sum = odd_sum + x
             else:
                 s2 = s2 + int(cif_digits[i])
 
-        t = s1 + s2
+        t = odd_sum + s2
         u2 = t % 10
         r = 10 - u2
 
