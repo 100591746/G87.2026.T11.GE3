@@ -6,6 +6,7 @@ from uc3m_consulting.enterprise_manager_config import (
     TEST_DOCUMENTS_STORE_FILE,
     TEST_NUMDOCS_STORE_FILE
 )
+from datetime import datetime
 
 
 class JsonStore:
@@ -41,6 +42,19 @@ class DocumentsJsonStore(JsonStore):
     def __init__(self):
         super().__init__(TEST_DOCUMENTS_STORE_FILE)
 
+    def find_by_date(self, date_str):
+        """Returns the documents registered on the given date"""
+        documents_list = self.load()
+        documents_found = []
+
+        for document in documents_list:
+            time_val = document["register_date"]
+            doc_date_str = datetime.fromtimestamp(time_val).strftime("%d/%m/%Y")
+            if doc_date_str == date_str:
+                documents_found.append(document)
+
+        return documents_found
+
 
 class NumDocsJsonStore(JsonStore):
     """Manages the numdocs JSON store"""
@@ -53,4 +67,3 @@ class NumDocsJsonStore(JsonStore):
         data_list = self.load()
         data_list.append(item)
         self.save(data_list)
-        

@@ -192,18 +192,13 @@ class EnterpriseManager:
 
         # open documents
         documents_store = DocumentsJsonStore()
-        documents_list = documents_store.load()
+        documents_list = documents_store.find_by_date(date_str)
 
         documents_count = 0
 
-        # loop to find
         for document in documents_list:
-            time_val = document["register_date"]
-            doc_date_str = datetime.fromtimestamp(time_val).strftime("%d/%m/%Y")
-
-            if doc_date_str == date_str:
-                ProjectDocument.build_from_store_data(document)
-                documents_count = documents_count + 1
+            ProjectDocument.build_from_store_data(document)
+            documents_count = documents_count + 1
 
         if documents_count == 0:
             raise EnterpriseManagementException("No documents found")
