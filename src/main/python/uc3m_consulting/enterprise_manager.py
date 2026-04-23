@@ -2,7 +2,7 @@
 import re
 import json
 
-from datetime import datetime, timezone
+from datetime import datetime
 from uc3m_consulting.enterprise_project import EnterpriseProject
 from uc3m_consulting.enterprise_management_exception import EnterpriseManagementException
 from uc3m_consulting.enterprise_manager_config import (PROJECTS_STORE_FILE)
