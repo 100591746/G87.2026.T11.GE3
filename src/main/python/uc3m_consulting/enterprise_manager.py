@@ -46,13 +46,6 @@ class EnterpriseManager:
             raise EnterpriseManagementException("Invalid description format")
 
     @staticmethod
-    def validate_acronym(project_acronym):
-        """validates the project acronym"""
-        acronym_pattern = re.compile(r"^[a-zA-Z0-9]{5,10}")
-        if not acronym_pattern.fullmatch(project_acronym):
-            raise EnterpriseManagementException("Invalid acronym")
-
-    @staticmethod
     def load_json_store(file_path):
         """Loads a JSON store file and returns its contents as a list"""
         try:
