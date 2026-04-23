@@ -122,17 +122,6 @@ class EnterpriseManager:
             raise EnterpriseManagementException("CIF type not supported")
         return True
 
-    def validate_starting_date(self, date_str):
-        """validates the date format using regex"""
-        my_date = self.parse_date(date_str)
-
-        if my_date < datetime.now(timezone.utc).date():
-            raise EnterpriseManagementException("Project's date must be today or later.")
-
-        if my_date.year < 2025 or my_date.year > 2050:
-            raise EnterpriseManagementException("Invalid date format")
-        return date_str
-
     #pylint: disable=too-many-arguments, too-many-positional-arguments
     def register_project(self,
                          company_cif: str,
