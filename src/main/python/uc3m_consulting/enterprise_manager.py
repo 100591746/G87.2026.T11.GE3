@@ -182,7 +182,7 @@ class EnterpriseManager:
         # open documents
         try:
             with open(TEST_DOCUMENTS_STORE_FILE, "r", encoding="utf-8", newline="") as file:
-                d_list = json.load(file)
+                documents_list = json.load(file)
         except FileNotFoundError as ex:
             raise EnterpriseManagementException("Wrong file  or file path") from ex
 
@@ -190,7 +190,7 @@ class EnterpriseManager:
         rst = 0
 
         # loop to find
-        for el in d_list:
+        for el in documents_list:
             time_val = el["register_date"]
 
             # string conversion for easy match
