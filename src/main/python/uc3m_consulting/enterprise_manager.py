@@ -16,6 +16,7 @@ from uc3m_consulting.starting_date import StartingDate
 from uc3m_consulting.department import Department
 from uc3m_consulting.project_acronym import ProjectAcronym
 from uc3m_consulting.project_description import ProjectDescription
+from uc3m_consulting.project_budget import ProjectBudget
 
 class EnterpriseManager:
     """Class for providing the methods for managing the orders"""
@@ -121,7 +122,7 @@ class EnterpriseManager:
 
         StartingDate(date)
 
-        self.validate_budget(budget)
+        ProjectBudget(budget)
 
 
         new_project = EnterpriseProject(company_cif=company_cif,
