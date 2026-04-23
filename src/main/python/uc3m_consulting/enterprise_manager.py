@@ -24,23 +24,6 @@ class EnterpriseManager:
         pass
 
     @staticmethod
-    def validate_budget(budget):
-        """validates the project budget"""
-        try:
-            budget_float = float(budget)
-        except ValueError as exc:
-            raise EnterpriseManagementException("Invalid budget amount") from exc
-
-        budget_str = str(budget_float)
-        if '.' in budget_str:
-            decimals = len(budget_str.split('.')[1])
-            if decimals > 2:
-                raise EnterpriseManagementException("Invalid budget amount")
-
-        if budget_float < 50000 or budget_float > 1000000:
-            raise EnterpriseManagementException("Invalid budget amount")
-
-    @staticmethod
     def load_json_store(file_path):
         """Loads a JSON store file and returns its contents as a list"""
         try:
